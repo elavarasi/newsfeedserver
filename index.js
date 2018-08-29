@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const newsRouter = require('./src/routes/newsRouter.js');
+const newsRouter = require('./src/Routes/newsRouter.js');
 const port = process.env.PORT || 5656;
 
 const MongoClient = require('mongodb').MongoClient;

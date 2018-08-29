@@ -27,19 +27,6 @@ newsRouter
 		let allnews = getNews();
 		console.log("all news are"  + allnews);
 		res.send(allnews);
-
-
-		// console.log(News);
-		// News.find({},(err,news) => {
-		// 	if(err) {
-		// 		console.log("got error" + err);
-		// 	} else {
-		// 		console.log(news);	
-		// 	}
-			
-		// 	res.json({dummy:'dummy'});
-		// })
-		// res.json({data1: 'data1'});
 	})
 	.get('/europenews',(req,res) => {
 		res.json({data2: 'data2'});

@@ -16,15 +16,17 @@ MongoClient.connect(url, function(err, client) {
 	});
 });
 
-
-app.use('/api/news', newsRouter);
-
+app.get('/',(req,res) => {
+  db.collection('news').find({}).toArray(function(err,result){
+    if (err) throw err;
+    res.send(result);    
+  });	
+});
 
 app.get('/api/us',(req,res) => {
   var query = { country: "US" };
   db.collection('news').find(query).toArray(function(err,result){
     if (err) throw err;
-    console.log(result);
     res.send(result);    
   });	
 });
@@ -33,7 +35,6 @@ app.get('/api/europe',(req,res) => {
   var query = { country: "Europe" };
   db.collection('news').find(query).toArray(function(err,result){
     if (err) throw err;
-    console.log(result);
     res.send(result);    
   });	
 });
@@ -41,7 +42,6 @@ app.get('/api/middleeast',(req,res) => {
   var query = { country: "MiddleEast" };
   db.collection('news').find(query).toArray(function(err,result){
     if (err) throw err;
-    console.log(result);
     res.send(result);    
   });	
 });
@@ -49,14 +49,10 @@ app.get('/api/asia',(req,res) => {
   var query = { country: "Asia" };
   db.collection('news').find(query).toArray(function(err,result){
     if (err) throw err;
-    console.log(result);
     res.send(result);    
   });	
 });
 
 
-// app.listen(port, () => {
-// 	console.log(`http://localhost:${port}`);
-// });
 
 

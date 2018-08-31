@@ -22,7 +22,7 @@ MongoClient.connect(url, function(err, client) {
     next()
   });
 
-app.get('/',(req,res) => {
+app.all('/',(req,res) => {
   db.collection('news').find({}).toArray(function(err,result){
     if (err) throw err;
     res.send(result);    

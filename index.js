@@ -16,6 +16,12 @@ MongoClient.connect(url, function(err, client) {
 	});
 });
 
+ app.all('/', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next()
+  });
+
 app.get('/',(req,res) => {
   db.collection('news').find({}).toArray(function(err,result){
     if (err) throw err;

@@ -16,11 +16,37 @@ MongoClient.connect(url, function(err, client) {
 	});
 });
 
+//Cors allow
  app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next()
   });
+
+  app.all('/api/us', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next()
+  });
+  
+  app.all('/api/europe', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next()
+  });
+    
+  app.all('/api/middleeast', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next()
+  });
+  
+  app.all('/api/asia', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next()
+  });
+
 
 app.all('/',(req,res) => {
   db.collection('news').find({}).toArray(function(err,result){
@@ -29,6 +55,7 @@ app.all('/',(req,res) => {
   });	
 });
 
+//All routes
 app.get('/api/us',(req,res) => {
   var query = { country: "US" };
   db.collection('news').find(query).toArray(function(err,result){

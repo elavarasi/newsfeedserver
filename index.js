@@ -16,75 +16,56 @@ MongoClient.connect(url, function(err, client) {
 	});
 });
 
-//Cors allow
- app.all('/', function(req, res, next) {
+//HandleCors middleware
+ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next()
   });
 
-  app.all('/api/us', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-  });
-  
-  app.all('/api/europe', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-  });
-    
-  app.all('/api/middleeast', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-  });
-  
-  app.all('/api/asia', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-  });
+app.get('/news/:country',(req,res) => {
+  console.log(req.params.country);
+    var query = { country: "US" };
+    switch(req.params.country) {
+        case "au":
+          query.country = "AU";      
+          break;
+        case "gb":
+          query.country = "GB";
+          break;
+        case "jp":
+          query.country = "JP";
+          break;
+        case "fr":
+          query.country = "FR";
+          break;
+        case "cn":
+          query.country = "CN";
+          break;
+    }
+    console.log(query);
 
-
-app.all('/',(req,res) => {
-  db.collection('news').find({}).toArray(function(err,result){
-    if (err) throw err;
-    res.send(result);    
-  });	
+      db.collection('worldnews').find(query).toArray(function(err,result){
+              if (err) throw err;
+              res.send(result);    
+      }); 
 });
 
-//All routes
-app.get('/api/us',(req,res) => {
-  var query = { country: "US" };
-  db.collection('news').find(query).toArray(function(err,result){
-    if (err) throw err;
-    res.send(result);    
-  });	
+app.get('/', (req,res) => {
+  db.collection('worldnews').find({}).toArray(function(err,result){
+      if (err) throw err;
+            res.send(result);    
+      }); 
 });
 
-app.get('/api/europe',(req,res) => {
-  var query = { country: "Europe" };
-  db.collection('news').find(query).toArray(function(err,result){
-    if (err) throw err;
-    res.send(result);    
-  });	
+app.get('/news', (req,res) => {
+  db.collection('worldnews').find({}).toArray(function(err,result){
+      if (err) throw err;
+            res.send(result);    
+      }); 
 });
-app.get('/api/middleeast',(req,res) => {
-  var query = { country: "MiddleEast" };
-  db.collection('news').find(query).toArray(function(err,result){
-    if (err) throw err;
-    res.send(result);    
-  });	
-});
-app.get('/api/asia',(req,res) => {
-  var query = { country: "Asia" };
-  db.collection('news').find(query).toArray(function(err,result){
-    if (err) throw err;
-    res.send(result);    
-  });	
-});
+
+
 
 
 
